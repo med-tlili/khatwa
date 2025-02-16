@@ -7,8 +7,8 @@ const btnclient=document.querySelector('.btnclient-popup');
 const btnclientins=document.querySelector('.client-link');
 const btnentreprisecl=document.querySelector('.entreprise2-link');
 const icclose=document.querySelector('.icon-close');
-const icclose2=document.querySelector('.icon-close2');
-icclose2.addEventListener('click',()=>{
+const icclosec=document.querySelector('.icon-close.c');
+icclosec.addEventListener('click',()=>{
     wrapperclient.classList.remove('client');
     wrapper.classList.remove('entreprise');
 });
