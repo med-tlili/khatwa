@@ -88,6 +88,7 @@ header{
 .wrapper,.wrapper-client{
     position: absolute;
     bottom: 0;
+    top:15%;
     width: 400px;
     height: 440px;
     background: transparent;
