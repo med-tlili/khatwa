@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="C:\Users\Belar\Downloads\favicon.ico" type="image/x-icon">
+  <title>Charchili</title>
+  
+  <style>
+    body {
+      font-family: "Holiday", sans-serif;
+      text-align: center;
+      background: linear-gradient(270deg, rgb(226, 121, 243), rgb(240, 100, 179), rgb(78, 12, 62), rgb(120, 24, 110));
+      background-size: 400% 400%;
+      margin: 0;
+      padding: 0;
+      animation: gradientBG 15s ease infinite;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .container {
+      background: rgb(219, 128, 207);
+      padding: 15px;
+      margin: 50px auto;
+      width: 40%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    h1, h2 {
+      color: #333;
+    }
+
+    button {
+      display: block;
+      width: 80%;
+      margin: 10px auto;
+      padding: 10px;
+      background-color: #3c073a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #541560;
+    }
+
+    input, textarea {
+      display: block;
+      width: 80%;
+      margin: 10px auto;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+    }
+
+    
+    .logo {
+      font-size: 48px;
+      font-weight: bold;
+      color: #400851;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .logo span {
+      display: inline-block;
+      opacity: 0;
+      animation: fall 1s forwards;
+    }
+
+    .logo span:nth-child(1) { animation-delay: 0s; }
+    .logo span:nth-child(2) { animation-delay: 0.2s; }
+    .logo span:nth-child(3) { animation-delay: 0.4s; }
+    .logo span:nth-child(4) { animation-delay: 0.6s; }
+    .logo span:nth-child(5) { animation-delay: 0.8s; }
+    .logo span:nth-child(6) { animation-delay: 1s; }
+    .logo span:nth-child(7) { animation-delay: 1.2s; }
+    .logo span:nth-child(😎 { animation-delay: 1.4s; }
+    .logo span:nth-child(9) { animation-delay: 1.6s; }
+
+    @keyframes fall {
+      0% { transform: translateY(-50px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+  </style>
+</head>
+<body>
+  <div id="role-selection" class="container">
+  <div class="logo">
+    <span>C</span><span>h</span><span>a</span><span>r</span><span>c</span><span>h</span><span>i</span><span>l</span><span>i</span>
+  </div>
+    <h1>Êtes-vous un recruteur ou un chercheur de stage ?</h1>
+    <button onclick="selectRole('job-seeker')">Chercheur de stage</button>
+    <button onclick="selectRole('recruiter')">Recruteur</button>
+  </div>
+    
+  <div id="login" class="container hidden">
+    <h2>Connexion</h2>
+    <input type="text" id="name" placeholder="Nom">
+    <input type="text" id="surname" placeholder="Prénom">
+    <input type="email" id="email" placeholder="Email">
+    <input type="tel" id="phone" placeholder="Numéro de téléphone">
+    <input type="password" id="password" placeholder="Mot de passe">
+    <button onclick="login()">Se connecter</button>
+    <button onclick="backToRoleSelection()">Retour</button>
+    <div id="error-message" class="error"></div>
+  </div>
+    
+  <div id="profile-job-seeker" class="container hidden">
+    <h2>Profil - Chercheur de Stage</h2>
+    <p>Bienvenue, <span id="jobSeekerName">[Nom] [Prénom]</span> !</p>
+    <button onclick="goToJobSeekerDashboard()">Accéder à votre tableau de bord</button>
+    <button onclick="logout()">Déconnexion</button>
+  </div>
+    
+  <div id="profile-recruiter" class="container hidden">
+    <h2>Profil - Recruteur</h2>
+    <p>Bienvenue, <span id="recruiterName">[Nom] [Prénom]</span> !</p>
+    <button onclick="goToRecruiterDashboard()">Accéder à votre tableau de bord</button>
+    <button onclick="logout()">Déconnexion</button>
+  </div> 
+  
+  <div id="job-seeker-dashboard" class="container hidden">
+    <h2>Tableau de Bord - Chercheur de Stage</h2>
+    <button onclick="uploadCV()">Mettre mon CV</button>
+    <button onclick="searchOffers()">Chercher des offres</button>
+    <button onclick="logout()">Déconnexion</button>
+  </div>
+
+  <div id="recruiter-dashboard" class="container hidden">
+    <h2>Tableau de Bord - Recruteur</h2>
+    <button onclick="viewCandidates()">Voir les CV des candidats</button>
+    <button onclick="postJob()">Publier une offre</button>
+    <button onclick="logout()">Déconnexion</button>
+  </div>
+    
+  <script>
+    function selectRole(role) {
+      document.getElementById('role-selection').classList.add('hidden');
+      document.getElementById('login').classList.remove('hidden');
+      localStorage.setItem('userRole', role);
+    }
+
+    function backToRoleSelection() {
+      document.getElementById('login').classList.add('hidden');
+      document.getElementById('role-selection').classList.remove('hidden');
+    }
+
+    function login() {
+      const name = document.getElementById('name').value;
+      const surname = document.getElementById('surname').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const password = document.getElementById('password').value;
+
+      document.getElementById('error-message').textContent = "";
+
+      if (!name || !surname || !email || !phone || !password) {
+        document.getElementById('error-message').textContent = "Tous les champs doivent être remplis.";
+        return;
+      }
+
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById('error-message').textContent = "Veuillez entrer un email valide.";
+        return;
+      }
+
+      const phonePattern = /^\d{8}$/;
+      if (!phonePattern.test(phone)) {
+        document.getElementById('error-message').textContent = "Le numéro de téléphone doit comporter exactement 8 chiffres.";
+        return;
+      }
+
+      if (password.length < 6) {
+        document.getElementById('error-message').textContent = "Le mot de passe doit comporter au moins 6 caractères.";
+        return;
+      }
+
+      let role = localStorage.getItem('userRole');
+      document.getElementById('login').classList.add('hidden');
+
+      if (role === 'job-seeker') {
+        document.getElementById('jobSeekerName').textContent = name + " " + surname;
+        document.getElementById('profile-job-seeker').classList.remove('hidden');
+      } else if (role === 'recruiter') {
+        document.getElementById('recruiterName').textContent = name + " " + surname;
+        document.getElementById('profile-recruiter').classList.remove('hidden');
+      }
+    }
+
+    function goToJobSeekerDashboard() {
+      document.getElementById('profile-job-seeker').classList.add('hidden');
+      document.getElementById('job-seeker-dashboard').classList.remove('hidden');
+    }
+
+    function goToRecruiterDashboard() {
+      document.getElementById('profile-recruiter').classList.add('hidden');
+      document.getElementById('recruiter-dashboard').classList.remove('hidden');
+    }
+
+    function logout() {
+      localStorage.removeItem('userRole');
+      document.getElementById('login').classList.add('hidden');
+      document.getElementById('profile-job-seeker').classList.add('hidden');
+      document.getElementById('profile-recruiter').classList.add('hidden');
+      document.getElementById('job-seeker-dashboard').classList.add('hidden');
+      document.getElementById('recruiter-dashboard').classList.add('hidden');
+      document.getElementById('role-selection').classList.remove('hidden');
+    }
+
+    function uploadCV() {
+            const fileInput = document.getElementById("cvInput");
+            if (fileInput.files.length > 0) {
+                document.getElementById("cvStatus").innerText = "CV téléchargé : " + fileInput.files[0].name;
+            } else {
+                alert("Veuillez sélectionner un fichier.");
+            }
+        }
+
+    function searchOffers() {
+            const keyword = document.getElementById("searchInput").value.toLowerCase();
+            const offers = ["Développeur Web", "Ingénieur DevOps", "Data Scientist"];
+            const result = offers.filter(offer => offer.toLowerCase().includes(keyword));
+            const list = document.getElementById("offersList");
+            list.innerHTML = result.map(offer => <li>${offer}</li>).join("");
+        }
+
+        function viewCandidates() {
+            const candidates = ["Alice Dupont", "Jean Martin", "Sophie Bernard"];
+            const list = document.getElementById("candidatesList");
+            list.innerHTML = candidates.map(candidate => <li>${candidate}</li>).join("");
+        }
+
+        function postJob() {
+            const title = document.getElementById("jobTitle").value;
+            const desc = document.getElementById("jobDesc").value;
+            if (title && desc) {
+                const list = document.getElementById("jobPosts");
+                list.innerHTML += <li><strong>${title}</strong>: ${desc}</li>;
+            } else {
+                alert("Veuillez remplir tous les champs.");
+            }
+        }
+  </script>
+</body>
+</html>
