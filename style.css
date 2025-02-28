@@ -279,7 +279,7 @@ header{
 .form-scroll::-webkit-scrollbar-thumb:hover,.body-scroll::-webkit-scrollbar-thumb:hover {
     background:transparent;
 }
-iframe{
+#ifr{
     padding-top: 100px;
     width: 1000px;
     height: 530px;
