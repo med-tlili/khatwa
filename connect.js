@@ -33,6 +33,7 @@ function FindData() {
             const userData = snapshot.val();
             if(userData.pass==pass_e.value){
                 ifr.src="entreprise.html";
+                ifr.style="visibility:visible";
                 wrapper.classList.remove('entreprise');
             }else{
                 alert("Mot de pass incorrect!!!");
